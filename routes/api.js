@@ -28,4 +28,21 @@ router.get('/auction', function (req, res, next) {
   }); // request
 }); // router.get
 
+router.get('/info', function (req, res, next) {
+  let serverId = encodeURIComponent(req.query.server);
+  let characterId = encodeURIComponent(req.query.id);
+  let resbody = {};
+  let stat =
+    _url +
+    `df/servers/${serverId}/characters/${characterId}/status?apikey=${apiKey}`;
+  console.log(stat);
+  request(stat, function (error, response1, body1) {
+    if (!error) {
+      resbody.status = body1;
+      console.log(resbody);
+      res.send(resbody);
+    }
+  });
+});
+
 module.exports = router;
